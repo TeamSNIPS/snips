@@ -19,6 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -27,8 +28,9 @@
 </head>
 <body>
     <form id="frm" runat="server">
-        <div>
-            
+        <div class="title">
+            SNIPS
+            <img src="/images/crab.png" />
         </div>
     </form>
 </body>
