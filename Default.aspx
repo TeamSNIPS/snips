@@ -18,8 +18,9 @@
             String duration;
             String result;
             System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo();
-            p.FileName = "C:\\ffmpeg\\bin\\ffmpeg.exe";
-            p.Arguments = "-i C:\\Users\\Thomas\\Documents\\repos\\snips\\website\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 C:\\Users\\Thomas\\Documents\\repos\\snips\\website\\cut.mp4";
+            string map_path = HttpContext.Current.Server.MapPath(".");
+            p.FileName = "C:\\ffmpeg.exe";
+            p.Arguments = "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4";
             p.UseShellExecute = false;
             p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             //p.CreateNoWindow = false;
