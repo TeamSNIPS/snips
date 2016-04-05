@@ -126,7 +126,9 @@
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
-
+        <div class="windows">
+            <p>Time Stamp Window Size</p>
+        </div>
         <button type="submit">Test Snippetting</button>
         <p id="results" runat="server"></p>
     </form>
