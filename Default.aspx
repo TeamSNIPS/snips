@@ -10,37 +10,16 @@
         }
         else
         {
-
             String map_path = HttpContext.Current.Server.MapPath(".");
             if ((System.IO.File.Exists(map_path + "\\cut.mp4")))
-                {
-                    System.IO.File.Delete(map_path + "\\cut.mp4");
-                }
-            String result = ProcessVideo.CallFFmpeg("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");
-            // reference code for running ffmpeg
-            //
-            //System.IO.StreamReader errorreader;
-            //String duration;
-            //String result;
-            //System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo();
-            //string map_path = HttpContext.Current.Server.MapPath(".");
-            //p.FileName = "C:\\ffmpeg.exe";
-            //p.Arguments = "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4";
-            //p.UseShellExecute = false;
-            //p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            ////p.CreateNoWindow = false;
-            ////p.RedirectStandardOutput = true;
-            //p.RedirectStandardError = true;
+            {
+                System.IO.File.Delete(map_path + "\\cut.mp4");
+            }
+            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");  
+                
+            String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
 
-            //var process = new System.Diagnostics.Process();
-            //process.StartInfo = p;
-            //process.Start();
-            //errorreader = process.StandardError;
-            //process.WaitForExit();
-            //result = errorreader.ReadToEnd();
-            result = ProcessVideo.CallFFmpeg("C:\\ffprobe.exe", map_path + "\\cut.mp4");
-           // String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
-            results.InnerText = result;
+            pResults.InnerText = results2;
         }
     }
 </script>
@@ -121,6 +100,7 @@
                 </div>
             </div>
         </div>
+
         <div class="upload">
             <input type="file" accept=".mov,.mp4,.m4v">
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
@@ -129,7 +109,8 @@
         <div class="windows">
             <p>Time Stamp Window Size</p>
         </div>
+
         <button type="submit">Test Snippetting</button>
-        <p id="results" runat="server"></p>
+        <p id="pResults" runat="server"></p>
     </form>
 </asp:Content>
