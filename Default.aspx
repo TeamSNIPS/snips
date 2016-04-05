@@ -12,11 +12,17 @@
         {
 
             String map_path = HttpContext.Current.Server.MapPath(".");
+            //This just deletes the video snippets created for our testing purposes
             if ((System.IO.File.Exists(map_path + "\\cut.mp4")))
-                {
-                    System.IO.File.Delete(map_path + "\\cut.mp4");
-                }
+            {
+                System.IO.File.Delete(map_path + "\\cut.mp4");
+            }
+            if ((System.IO.File.Exists(map_path + "\\cut2.mp4")))
+            {
+                System.IO.File.Delete(map_path + "\\cut2.mp4");
+            }
             String result = ProcessVideo.CallFFmpeg("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");
+            result = ProcessVideo.CallFFmpeg("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:02 -t 00:00:06 -async 1 " + map_path + "\\cut2.mp4");
             // reference code for running ffmpeg
             //
             //System.IO.StreamReader errorreader;
@@ -39,8 +45,10 @@
             //process.WaitForExit();
             //result = errorreader.ReadToEnd();
             result = ProcessVideo.CallFFmpeg("C:\\ffprobe.exe", map_path + "\\cut.mp4");
-           // String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
+            // String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
             results.InnerText = result;
+
+
         }
     }
 </script>
