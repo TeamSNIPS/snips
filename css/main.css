@@ -1,8 +1,30 @@
-﻿body {
+﻿.no-js{
+    margin: 0px;
+}
+body {
+    margin: 0px;
+    background-color: rgb(104,176,172);
+}
+.header{
+    margin: 0px;
+    padding-top: 15px;
+    padding-bottom: 8px;
+    background-color: rgb(200,213,185);
 }
 .title {
     margin: auto;
     width: 30%;
     font-size: 70px;
     text-align: center;
+    font-weight: bolder;
+}
+.title2{
+    font-size: 24px;
+    font-weight: bolder;
+    margin-top: 0px;
+}
+.upload{
+    padding: 25px;
+    text-align: center;
+    background-color: rgb(74,124,89);
 }

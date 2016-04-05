@@ -107,10 +107,21 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
 
     <form id="frm" runat="server">
-        <div class="title">
-            SNIPS
-            <img src="/images/crab.png" />
+        <div class="header">
+            <div class="title">
+                SNIPS
+                <img src="/images/crab.png" />
+                <div class="title2">
+                    <p style="margin-top: 0px">An auto-snippeting tool for video</p>
+                </div>
+            </div>
         </div>
+        <div class="upload">
+            <input type="file" accept=".mov,.mp4,.m4v">
+            <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
+            <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
+        </div>
+
         <button type="submit">Test Snippetting</button>
         <p id="results" runat="server"></p>
     </form>
