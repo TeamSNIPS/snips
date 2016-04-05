@@ -27,17 +27,17 @@ public class ProcessVideo
         process.StartInfo.FileName = filename;
         process.StartInfo.Arguments = arguments;
         process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
+        //process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 
         process.Start();
         String error = process.StandardError.ReadToEnd();
-        String output = process.StandardError.ReadToEnd();
+        //String output = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
         process.Dispose();
-        return output;
+        return error;
 
     }
 }
