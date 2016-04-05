@@ -20,24 +20,23 @@ public class ProcessVideo
         //
     }
 
-    public static String CallFFmpeg(string filename, string arguments)
+    public static String StartProcess(string filename, string arguments)
     {
-
         Process process = new Process();
         process.StartInfo.FileName = filename;
         process.StartInfo.Arguments = arguments;
         process.StartInfo.UseShellExecute = false;
         //process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
+        process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 
         process.Start();
-        String error = process.StandardError.ReadToEnd();
+        String error = process.StandardOutput.ReadToEnd();
         //String output = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
         process.Dispose();
         return error;
-
     }
 }
