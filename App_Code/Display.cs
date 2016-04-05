@@ -12,12 +12,6 @@ public class Display
     {
         //
         // TODO: Add constructor logic here
-        //
-
-        
+        //       
     }
-
-
-
-
 }

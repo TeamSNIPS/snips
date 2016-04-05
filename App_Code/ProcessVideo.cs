@@ -26,7 +26,6 @@ public class ProcessVideo
         process.StartInfo.FileName = filename;
         process.StartInfo.Arguments = arguments;
         process.StartInfo.UseShellExecute = false;
-        //process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;

@@ -11,31 +11,15 @@
         else
         {
             String map_path = HttpContext.Current.Server.MapPath(".");
-            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut1.mp4");
-            // reference code for running ffmpeg
-            //
-            //System.IO.StreamReader errorreader;
-            //String duration;
-            //String result;
-            //System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo();
-            //string map_path = HttpContext.Current.Server.MapPath(".");
-            //p.FileName = "C:\\ffmpeg.exe";
-            //p.Arguments = "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut1.mp4";
-            //p.UseShellExecute = false;
-            //p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            ////p.CreateNoWindow = false;
-            ////p.RedirectStandardOutput = true;
-            //p.RedirectStandardError = true;
+            if ((System.IO.File.Exists(map_path + "\\cut.mp4")))
+            {
+                System.IO.File.Delete(map_path + "\\cut.mp4");
+            }
+            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");  
+                
+            String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
 
-            //var process = new System.Diagnostics.Process();
-            //process.StartInfo = p;
-            //process.Start();
-            //errorreader = process.StandardError;
-            //process.WaitForExit();
-            //result = errorreader.ReadToEnd();
-            String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut1.mp4");
-
-             pResults.InnerText = results2;
+            pResults.InnerText = results2;
         }
     }
 </script>
