@@ -10,7 +10,12 @@
         }
         else
         {
+
             String map_path = HttpContext.Current.Server.MapPath(".");
+            if ((System.IO.File.Exists(map_path + "\\cut.mp4")))
+                {
+                    System.IO.File.Delete(map_path + "\\cut.mp4");
+                }
             String result = ProcessVideo.CallFFmpeg("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");
             // reference code for running ffmpeg
             //
@@ -33,9 +38,9 @@
             //errorreader = process.StandardError;
             //process.WaitForExit();
             //result = errorreader.ReadToEnd();
-
-            String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
-            results.InnerText = duration;
+            result = ProcessVideo.CallFFmpeg("C:\\ffprobe.exe", map_path + "\\cut.mp4");
+           // String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
+            results.InnerText = result;
         }
     }
 </script>
