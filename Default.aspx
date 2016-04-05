@@ -10,29 +10,31 @@
         }
         else
         {
+            String map_path = HttpContext.Current.Server.MapPath(".");
+            String result = ProcessVideo.CallFFmpeg("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");
             // reference code for running ffmpeg
             //
-            System.IO.StreamReader errorreader;
-            String duration;
-            String result;
-            System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo();
-            string map_path = HttpContext.Current.Server.MapPath(".");
-            p.FileName = "C:\\ffmpeg.exe";
-            p.Arguments = "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4";
-            p.UseShellExecute = false;
-            p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            //p.CreateNoWindow = false;
-            //p.RedirectStandardOutput = true;
-            p.RedirectStandardError = true;
+            //System.IO.StreamReader errorreader;
+            //String duration;
+            //String result;
+            //System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo();
+            //string map_path = HttpContext.Current.Server.MapPath(".");
+            //p.FileName = "C:\\ffmpeg.exe";
+            //p.Arguments = "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4";
+            //p.UseShellExecute = false;
+            //p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            ////p.CreateNoWindow = false;
+            ////p.RedirectStandardOutput = true;
+            //p.RedirectStandardError = true;
 
-            var process = new System.Diagnostics.Process();
-            process.StartInfo = p;
-            process.Start();
-            errorreader = process.StandardError;
-            process.WaitForExit();
-            result = errorreader.ReadToEnd();
+            //var process = new System.Diagnostics.Process();
+            //process.StartInfo = p;
+            //process.Start();
+            //errorreader = process.StandardError;
+            //process.WaitForExit();
+            //result = errorreader.ReadToEnd();
 
-            duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
+            String duration = result.Substring(result.IndexOf("Duration: ") + ("Duration: ").Length, ("00:00:00").Length);
             results.InnerText = duration;
         }
     }
