@@ -1,6 +1,4 @@
-﻿<%@ Page Language="C#" %>
-
-<!DOCTYPE html>
+﻿<%@ Page Title="SNIPS | Home" Language="C#" MasterPageFile="MasterContent.master" %>
 
 <script runat="server">
 
@@ -39,18 +37,72 @@
     }
 </script>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <script type="text/javascript" src="/scripts/jquery-2.1.4.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
+<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 
-        });
-    </script>
-</head>
-<body>
+<script type="text/javascript">
+
+    $(function () {
+        // SAMPLE VALIDATE CODE
+<%--        $('#frm').preventDoubleSubmission();
+
+        $('#txtFirstName').focus();
+        $('#txtPhone').mask("(000) 000-0000");
+        $('#txtFax').mask("(000) 000-0000");
+        $('#txtEmergencyPhone').mask("(000) 000-0000");
+        $('#selOrganization').chosen();
+        $('#selState').chosen();
+
+        $('#frm').validate({
+            rules: {
+                <%=txtFirstName.UniqueID%>: { required: true },
+                <%=txtLastName.UniqueID%>: { required: true },
+                <%=txtEmail.UniqueID%>: { required: true, email: true },
+                <%=selUserType.UniqueID%>: { required: true },
+                <%=txtFax.UniqueID%>: { required: function(element){ return $('#ddlFax').val() == 'fax'; }, phoneUS: true },
+
+            },
+            messages: {
+                <%=txtFirstName.UniqueID%>: { 
+                    required: 'Please enter a First Name.'
+                },
+                <%=txtLastName.UniqueID%>: { 
+                    required: 'Please enter a Last Name.'
+                },
+                <%=txtEmail.UniqueID%>: { 
+                    required: 'Please enter an Email Address.',
+                    email: 'Please enter a valid Email Address.'
+                }, 
+                <%=selUserType.UniqueID%>: { 
+                    required: 'Please select a User Type.',
+                },                 
+            },
+            highlight: function(element) {
+                $(element).parent().addClass("field-error");
+            },
+            unhighlight: function(element) {
+                $(element).parent().removeClass("field-error");
+            },
+            errorPlacement: function(error, element) {
+                error.insertAfter(element.parent());
+            },
+            invalidHandler: function(form, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                        $("html, body").animate({ scrollTop: 0 }, "fast");
+                        $('#spnErrors').html('Please correct the form errors below.');
+                }
+            }
+        });--%>
+    });
+  </script>
+
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="NavContent" Runat="Server">
+</asp:Content>
+
+<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+
     <form id="frm" runat="server">
         <div class="title">
             SNIPS
@@ -59,5 +111,4 @@
         <button type="submit">Test Snippetting</button>
         <p id="results" runat="server"></p>
     </form>
-</body>
-</html>
+</asp:Content>
