@@ -106,11 +106,30 @@
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
+        <div class="windows" id ="timeInputs">
+              Time Stamp:<br>
+              <input type="text" name ="time1">
+              <br>
+              Window Size (Seconds):<br>
+              <input type="text" name="window1"> <br>
+        </div>
         <div class="windows">
-            <p>Time Stamp Window Size</p>
+            <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
         </div>
 
         <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
     </form>
+
+
+<script>
+    var num = 2;
+    function addMoreTimes() {
+        var dummy = 'Time Stamp:<br> <input type="text" name ="time' + num + '"> <br> Window Size (Seconds):<br> <input type="text" name="window' + num + '"> <br>';
+        num = num + 1;
+        document.getElementById('timeInputs').innerHTML += dummy;
+    }
+</script>
 </asp:Content>
+
+
