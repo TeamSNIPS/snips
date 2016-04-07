@@ -34,3 +34,7 @@ body {
     text-align: center;
     background-color: rgb(104,176,172);
 }
+.submit{
+    padding: 20px;
+    text-align: center;
+}

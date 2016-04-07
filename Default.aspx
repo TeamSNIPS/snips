@@ -117,7 +117,12 @@
             <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
         </div>
 
-        <button type="submit">Test Snippetting</button>
+        <div class="submit">
+            <input type ="submit" onclick ="validate();" value="Submit" />
+        </div>
+         
+
+        <!--<button type="submit">Test Snippetting</button>-->
         <p id="pResults" runat="server"></p>
     </form>
 
