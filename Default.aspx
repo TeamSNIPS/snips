@@ -94,7 +94,7 @@
         <div class="header">
             <div class="title">
                 SNIPS
-                <img src="/images/crab.png" />
+                <img src="./images/crab.png" />
                 <div class="title2">
                     <p style="margin-top: 0px">An auto-snippeting tool for video</p>
                 </div>
