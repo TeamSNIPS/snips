@@ -27,7 +27,8 @@
     <link href="./css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,700,700italic,400italic,300" rel="stylesheet" type="text/css">
     <link href="./css/jquery.fancybox.css" rel="stylesheet" type="text/css" />
-    
+    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
     <script type="text/javascript" src="./js/jquery-2.1.4.js"></script>
     <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="./js/jquery.validate.min.js"></script>
@@ -35,6 +36,8 @@
     <script type="text/javascript" src="./js/jquery.mask.min.js"></script>
     <script type="text/javascript" src="./js/jquery.fancybox.pack.js"></script>
     <script type="text/javascript" src="./js/jquery.prevent-double-submit.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    
         
     <link href="./css/main.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="./js/main.js"></script>
