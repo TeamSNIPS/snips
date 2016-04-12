@@ -15,8 +15,8 @@
             {
                 System.IO.File.Delete(map_path + "\\cut.mp4");
             }
-            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4 </dev/null > /dev/null 2>&1 &");
-            String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut1.mp4 </dev/null > /dev/null 2>&1 &");  
+            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
+            String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");  
             //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
 
             //pResults.InnerText = results2;
