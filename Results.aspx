@@ -2,7 +2,8 @@
 
 <script runat="server">
 
-    protected void Page_Load(object sender, System.EventArgs e) {
+    protected void Page_Load(object sender, System.EventArgs e)
+    {
 
         if (!IsPostBack)
         {
@@ -10,21 +11,21 @@
         }
         else
         {
-            
+
         }
     }
 </script>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 
 </script>
 
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="NavContent" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="NavContent" runat="Server">
 </asp:Content>
 
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
@@ -33,6 +34,7 @@
         <div class="header">
             <div class="title">
                 Results
+               
                 <img src="./images/crab.png" />
                 <div class="title2">
                     <p style="margin-top: 0px">An auto-snippeting tool for video</p>
@@ -41,8 +43,11 @@
         </div>
 
         <div id="divResults" runat="server">
-
         </div>
-        
+
+        <button type="button" class="btn btn-default btn-lg">
+            <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
+        </button>
+
     </form>
 </asp:Content>

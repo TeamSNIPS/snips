@@ -28,13 +28,17 @@ public class ProcessVideo
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.RedirectStandardError = true;
         process.StartInfo.RedirectStandardOutput = true;
+
+        //StringBuilder output = new StringBuilder();
+        //StringBuilder error = new StringBuilder();
+
         process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 
         process.Start();
+        
+        process.WaitForExit();
         String error = process.StandardOutput.ReadToEnd();
         //String output = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-
         process.Dispose();
         return error;
     }

@@ -15,11 +15,11 @@
             {
                 System.IO.File.Delete(map_path + "\\cut.mp4");
             }
-            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");  
-                
-            String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
+            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4 </dev/null > /dev/null 2>&1 &");
+            String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut1.mp4 </dev/null > /dev/null 2>&1 &");  
+            //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
 
-            pResults.InnerText = results2;
+            //pResults.InnerText = results2;
         }
     }
 </script>
@@ -150,7 +150,7 @@
         </div>
          
 
-        <!--<button type="submit">Test Snippetting</button>-->
+        <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
     </form>
 
