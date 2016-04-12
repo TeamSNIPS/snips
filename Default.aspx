@@ -30,34 +30,40 @@
 
     $(function () {
         // SAMPLE VALIDATE CODE
-<%--        $('#frm').preventDoubleSubmission();
+        $('#frm').preventDoubleSubmission();
 
-        $('#txtFirstName').focus();
-        $('#txtPhone').mask("(000) 000-0000");
+        $('.times').each(function () {
+            $(this).mask("00:00");
+        });
+        $('.windowsizes').each(function () {
+            $(this).mask("000");
+        });
+
+        /* $('#txtFirstName').focus();
+        $('#timestamp').mask("00:00");
         $('#txtFax').mask("(000) 000-0000");
         $('#txtEmergencyPhone').mask("(000) 000-0000");
         $('#selOrganization').chosen();
-        $('#selState').chosen();
+        $('#selState').chosen(); */
 
         $('#frm').validate({
-            rules: {
-                <%=txtFirstName.UniqueID%>: { required: true },
-                <%=txtLastName.UniqueID%>: { required: true },
-                <%=txtEmail.UniqueID%>: { required: true, email: true },
+<%--            rules: {
+                <%=video.UniqueID%>: { required: true },
+                <%=time1.UniqueID%>: { required: true },
+                <%=window1.UniqueID%>: { required: true},
                 <%=selUserType.UniqueID%>: { required: true },
                 <%=txtFax.UniqueID%>: { required: function(element){ return $('#ddlFax').val() == 'fax'; }, phoneUS: true },
 
             },
             messages: {
-                <%=txtFirstName.UniqueID%>: { 
-                    required: 'Please enter a First Name.'
+                <%=video.UniqueID%>: { 
+                    required: 'Please upload a video file.'
                 },
-                <%=txtLastName.UniqueID%>: { 
-                    required: 'Please enter a Last Name.'
+                <%=time1.UniqueID%>: { 
+                    required: 'Please enter valid timestamps.'
                 },
-                <%=txtEmail.UniqueID%>: { 
-                    required: 'Please enter an Email Address.',
-                    email: 'Please enter a valid Email Address.'
+                <%=window1.UniqueID%>: { 
+                    required: 'Please enter an Email Address.'
                 }, 
                 <%=selUserType.UniqueID%>: { 
                     required: 'Please select a User Type.',
@@ -78,9 +84,28 @@
                         $("html, body").animate({ scrollTop: 0 }, "fast");
                         $('#spnErrors').html('Please correct the form errors below.');
                 }
-            }
-        });--%>
+            }--%>
+        });
+        $('.times').each(function () {
+            $(this).rules('add', {
+                required: true,
+                messages: {
+                    required: "Enter a time stamp.",
+                }
+            });
+        });
+        $('.windowsizes').each(function () {
+            $(this).rules('add', {
+                required: true,
+                messages: {
+                    required: "Enter a window size.",
+                }
+            });
+        });
     });
+    function SaveResponses() {
+
+    }
   </script>
 
 </asp:Content>
@@ -91,6 +116,8 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
 
     <form id="frm" runat="server">
+        <asp:HiddenField ID="hdnTimestamps" runat="server" />
+        <asp:HiddenField ID="hdnWindows" runat="server" />
         <div class="header">
             <div class="title">
                 SNIPS
@@ -102,23 +129,23 @@
         </div>
 
         <div class="upload">
-            <input type="file" accept=".mov,.mp4,.m4v">
+            <input type="file" id="video" accept=".mov,.mp4,.m4v">
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
         <div class="windows" id ="timeInputs">
               Time Stamp:<br>
-              <input type="text" name ="time1">
+              <input type="text" class="times" id ="txtTime1">
               <br>
               Window Size (Seconds):<br>
-              <input type="text" name="window1"> <br>
+              <input type="text" class="windowsizes" id="txtWindow1"> <br>
         </div>
         <div class="windows">
             <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
         </div>
 
         <div class="submit">
-            <input type ="submit" onclick ="validate();" value="Submit" />
+            <input type ="button" onclick ="$('#frm').submit();" value="Submit" />
         </div>
          
 
@@ -130,7 +157,7 @@
 <script>
     var num = 2;
     function addMoreTimes() {
-        var dummy = 'Time Stamp:<br> <input type="text" name ="time' + num + '"> <br> Window Size (Seconds):<br> <input type="text" name="window' + num + '"> <br>';
+        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="time' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="window' + num + '"> <br>';
         num = num + 1;
         document.getElementById('timeInputs').innerHTML += dummy;
     }
