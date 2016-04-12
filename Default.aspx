@@ -129,7 +129,9 @@
         </div>
 
         <div class="upload">
-            <input type="file" id="video" accept=".mov,.mp4,.m4v">
+            <input type="file" id="files" name="files[]" accept=".mov,.mp4,.m4v" onchange="setFileInfo(this.files)">
+            <output id="list"></output>
+            <output id="infos"></output>
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
@@ -154,6 +156,47 @@
         <p id="pResults" runat="server"></p>
     </form>
 
+
+<script>
+    var myVideos = [];
+    window.URL = window.URL || window.webkitURL;
+    function setFileInfo(files) {
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function () {
+            window.URL.revokeObjectURL(this.src)
+            var duration = video.duration;
+            myVideos[myVideos.length - 1].duration = duration;
+            updateInfos();
+        }
+        video.src = URL.createObjectURL(files[0]);;
+    }
+
+    function updateInfos() {
+        document.querySelector('#infos').innerHTML = "";
+        for (i = 0; i < myVideos.length; i++) {
+            document.querySelector('#infos').innerHTML += "<div>" + myVideos[i].name + " duration: " + myVideos[i].duration + '</div>';
+        }
+    }
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                        f.size, ' bytes, last modified: ',
+                        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                        '</li>');
+            console.log(f);
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
 
 <script>
     var num = 2;
