@@ -28,6 +28,14 @@ body {
     text-align: center;
     background-color: rgb(74,124,89);
 }
+
+.snippet:nth-of-type(odd) {
+    background: rgb(74,124,89);
+}
+.snippet:nth-of-type(even) {
+    background: #68B0AC;
+}
+
 .windows{
     margin: 0px;
     padding: 20px;

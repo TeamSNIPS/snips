@@ -50,16 +50,18 @@ public class Retrieve
 
         for (int i = 1; i <= snipsNum; i++)
         {
-            html += "<div class='snippet'>" +
-                        "<video class='video' width='" + width + "' height='" + height + "' controls>" +
-                            "<source src='/videos/" + guid + "/Snippet_" + i + ".mp4' type='video/mp4'>" +
-                        "</video>" +
-                        "<div class='details'>" +
-                            "<table class='snippet-info'>" +
-                                "<tr><td>Title:</td><td>Snippet_" + i + ".mp4</td></tr>" +
-                                "<tr><td>Timestamp:</td><td>" + timestamps[i - 1] + "</td></tr>" +
-                                "<tr><td>Window Size:</td><td>" + windows[i - 1] + "</td></tr>" +
-                            "</table>" +
+            html += "<div class='snippet row'>" +
+                        "<div class='col-md-6 text-center'>" +
+                            "<video class='video' width='" + width + "' height='" + height + "' controls>" +
+                                "<source src='/videos/" + guid + "/Snippet_" + i + ".mp4' type='video/mp4'>" +
+                            "</video>" +
+                        "</div>"+
+                        "<div class='details col-md-6 text-center'>" +
+                            "<dl class='snippet-info dl-horizontal'>" +
+                                "<dt><strong>Title:</strong></dt><dd class='text-left'>Snippet_" + i + ".mp4</dd>" +
+                                "<dt><strong>Timestamp:</strong></dt><dd class='text-left'>" + timestamps[i - 1] + "</dd>" +
+                                "<dt><strong>Window Size:</strong></dt><dd class='text-left'>" + windows[i - 1] + "</dd>" +
+                            "</dl>" +
                             "<input type='checkbox' id='chkSnippet" + i + "' runat='server'>" +
                             "<label for='chkSnippet" + i + "'>Select this clip</label>" +
                         "</div>" +
