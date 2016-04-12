@@ -139,6 +139,7 @@
               <br>
               Window Size (Seconds):<br>
               <input type="text" class="windowsizes" id="txtWindow1"> <br>
+            <div id ="addmore2"></div>
         </div>
         <div class="windows">
             <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
@@ -157,9 +158,18 @@
 <script>
     var num = 2;
     function addMoreTimes() {
-        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="time' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="window' + num + '"> <br>';
+        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="txtTime' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="txtWindow' + num + '"> <br> <div id ="addmore'+(num+1)+'"></div>';
         num = num + 1;
-        document.getElementById('timeInputs').innerHTML += dummy;
+        document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
+        masking();
+    }
+    function masking() {
+        $('.times').each(function () {
+            $(this).mask("00:00");
+        });
+        $('.windowsizes').each(function () {
+            $(this).mask("000");
+        });
     }
 </script>
 </asp:Content>
