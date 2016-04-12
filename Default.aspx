@@ -132,6 +132,11 @@
             <input type="file" id="files" name="files[]" accept=".mov,.mp4,.m4v" onchange="setFileInfo(this.files)">
             <output id="list"></output>
             <output id="infos"></output>
+            <label class="btn btn-default btn-lg" for="video">
+                <input type="file" id="video" accept=".mov,.mp4,.m4v" style="display:none">
+                Upload
+            </label>
+
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
@@ -144,13 +149,12 @@
             <div id ="addmore2"></div>
         </div>
         <div class="windows">
-            <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
+            <button type ="button" class="btn btn-default" id ="morefields" onclick ="addMoreTimes();">  <strong>+</strong> </button>
         </div>
 
         <div class="submit">
-            <input type ="button" onclick ="$('#frm').submit();" value="Submit" />
+            <input type ="button" class="btn btn-default btn-lg" onclick ="$('#frm').submit();" value="Submit" />
         </div>
-         
 
         <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
