@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="SNIPS | Results" Language="C#" MasterPageFile="MasterContent.master" %>
 
+<%@ Import Namespace="System.IO" %>
+
 <script runat="server">
 
     protected void Page_Load(object sender, System.EventArgs e)
@@ -31,6 +33,7 @@
             if (file_names.Count > 0)
             {
                 Retrieve.DownloadFiles(file_names);
+                File.Create(map_path + "/videos/" + guid + "/finished.txt").Close();
             }
         }
     }
