@@ -39,10 +39,6 @@
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 
     <script type="text/javascript">
-        $(function () {
-
-
-        });
         function getSelected() {
             var selected = [];
             $('input:checked').each(function () {
@@ -74,13 +70,15 @@
                 </div>
             </div>
         </div>
+        
+        <div class="container" style="width:100%">
+            <div id="divResults" runat="server">
+            </div>
 
-        <div id="divResults" runat="server">
+            <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
+                <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
+            </button>
         </div>
-
-        <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
-            <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
-        </button>
-
     </form>
 </asp:Content>
+

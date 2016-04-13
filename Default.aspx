@@ -15,11 +15,11 @@
             {
                 System.IO.File.Delete(map_path + "\\cut.mp4");
             }
-            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample.mp4 -ss 00:00:00 -t 00:00:04 -async 1 " + map_path + "\\cut.mp4");  
-                
-            String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
+            String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
+            String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");  
+            //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
 
-            pResults.InnerText = results2;
+            //pResults.InnerText = results2;
         }
     }
 </script>
@@ -129,7 +129,14 @@
         </div>
 
         <div class="upload">
-            <input type="file" id="video" accept=".mov,.mp4,.m4v">
+            <input type="file" id="files" name="files[]" accept=".mov,.mp4,.m4v" onchange="setFileInfo(this.files)">
+            <output id="list"></output>
+            <output id="infos"></output>
+            <label class="btn btn-default btn-lg" for="video">
+                <input type="file" id="video" accept=".mov,.mp4,.m4v" style="display:none">
+                Upload
+            </label>
+
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
@@ -139,27 +146,77 @@
               <br>
               Window Size (Seconds):<br>
               <input type="text" class="windowsizes" id="txtWindow1"> <br>
+            <div id ="addmore2"></div>
         </div>
         <div class="windows">
-            <input type ="button" id ="morefields" onclick ="addMoreTimes();" value="+" />
+            <button type ="button" class="btn btn-default" id ="morefields" onclick ="addMoreTimes();">  <strong>+</strong> </button>
         </div>
 
         <div class="submit">
-            <input type ="button" onclick ="$('#frm').submit();" value="Submit" />
+            <input type ="button" class="btn btn-default btn-lg" onclick ="$('#frm').submit();" value="Submit" />
         </div>
-         
 
-        <!--<button type="submit">Test Snippetting</button>-->
+        <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
     </form>
 
 
 <script>
+    var myVideos = [];
+    window.URL = window.URL || window.webkitURL;
+    function setFileInfo(files) {
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function () {
+            window.URL.revokeObjectURL(this.src)
+            var duration = video.duration;
+            myVideos[myVideos.length - 1].duration = duration;
+            updateInfos();
+        }
+        video.src = URL.createObjectURL(files[0]);;
+    }
+
+    function updateInfos() {
+        document.querySelector('#infos').innerHTML = "";
+        for (i = 0; i < myVideos.length; i++) {
+            document.querySelector('#infos').innerHTML += "<div>" + myVideos[i].name + " duration: " + myVideos[i].duration + '</div>';
+        }
+    }
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                        f.size, ' bytes, last modified: ',
+                        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                        '</li>');
+            console.log(f);
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+
+<script>
     var num = 2;
     function addMoreTimes() {
-        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="time' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="window' + num + '"> <br>';
+        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="txtTime' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="txtWindow' + num + '"> <br> <div id ="addmore'+(num+1)+'"></div>';
         num = num + 1;
-        document.getElementById('timeInputs').innerHTML += dummy;
+        document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
+        masking();
+    }
+    function masking() {
+        $('.times').each(function () {
+            $(this).mask("00:00");
+        });
+        $('.windowsizes').each(function () {
+            $(this).mask("000");
+        });
     }
 </script>
 </asp:Content>
