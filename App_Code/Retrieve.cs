@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Ionic.Zip;
+using Ionic.Zlib;
 
 /// <summary>
 /// Summary description for Retrieve
@@ -60,12 +63,31 @@ public class Retrieve
                                 "<tr><td>Timestamp:</td><td>" + timestamps[i - 1] + "</td></tr>" +
                                 "<tr><td>Window Size:</td><td>" + windows[i - 1] + "</td></tr>" +
                             "</table>" +
-                            "<input type='checkbox' id='chkSnippet" + i + "' runat='server'>" +
+                            "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server'>" +
                             "<label for='chkSnippet" + i + "'>Select this clip</label>" +
                         "</div>" +
                      "</div>";
         }
 
         return html;
+    }
+    public static void DownloadFiles(ArrayList file_names) {
+
+        System.Web.HttpContext.Current.Response.Clear();
+        System.Web.HttpContext.Current.Response.BufferOutput = false;
+        System.Web.HttpContext.Current.Response.ContentType = "application/zip";
+        System.Web.HttpContext.Current.Response.AddHeader("content-disposition", "attachment; filename=snips.zip");
+
+        using (ZipFile zip = new ZipFile())
+        {
+            zip.CompressionLevel = CompressionLevel.None;
+            foreach (string file_name in file_names)
+            {
+                zip.AddFile(file_name, "");
+            }
+            zip.Save(System.Web.HttpContext.Current.Response.OutputStream);
+        }
+
+        System.Web.HttpContext.Current.Response.Close();
     }
 }
