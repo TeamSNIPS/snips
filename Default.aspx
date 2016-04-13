@@ -39,13 +39,6 @@
             $(this).mask("000");
         });
 
-        /* $('#txtFirstName').focus();
-        $('#timestamp').mask("00:00");
-        $('#txtFax').mask("(000) 000-0000");
-        $('#txtEmergencyPhone').mask("(000) 000-0000");
-        $('#selOrganization').chosen();
-        $('#selState').chosen(); */
-
         $('#frm').validate({
 <%--            rules: {
                 <%=video.UniqueID%>: { required: true },
@@ -106,6 +99,75 @@
     function SaveResponses() {
 
     }
+
+    // create additional time inputs
+    var num = 2;
+    function addMoreTimes() {
+        var dummy = '<div class="form-group row">' +
+                        '<div class="form-column">' +
+                            '<label for="txtTime' + num + '">Time Stamp:</label>' +
+                            '<input type="text" class="times form-control" id ="txtTime' + num + '" placeholder="00:00">' +
+                            '</div>' +
+                            '<div class="form-column">' +
+                                '<label for="txtWindow' + num + '">Window Size:</label>' +
+                                '<input type="text" class="windowsizes form-control" id ="txtWindow' + num + '" placeholder="0">' +
+                                '<small class="text-muted">(seconds)</small>' +
+                            '</div>' +
+                        '</div>';
+        num = num + 1;
+        $('#timeInputs').html($('#timeInputs').html() + dummy);
+        //document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
+        masking();
+    }
+    function masking() {
+        $('.times').each(function () {
+            $(this).mask("00:00");
+        });
+        $('.windowsizes').each(function () {
+            $(this).mask("000");
+        });
+    }
+
+    // get video metadata
+    var myVideos = [];
+    window.URL = window.URL || window.webkitURL;
+    function setFileInfo(files) {
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function () {
+            window.URL.revokeObjectURL(this.src)
+            var duration = video.duration;
+            $('#hdnDuration').val(duration);
+            myVideos[myVideos.length - 1].duration = duration;
+            updateInfos();
+        }
+        video.src = URL.createObjectURL(files[0]);;
+    }
+
+    function updateInfos() {
+        document.querySelector('#infos').innerHTML = "";
+        for (i = 0; i < myVideos.length; i++) {
+            document.querySelector('#infos').innerHTML += "<div>" + myVideos[i].name/* + " duration: " + myVideos[i].duration*/ + '</div>';
+        }
+    }
+
+    //function handleFileSelect(evt) {
+    //    var files = evt.target.files; // FileList object
+
+    //    // files is a FileList of File objects. List some properties.
+    //    var output = [];
+    //    for (var i = 0, f; f = files[i]; i++) {
+    //        output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    //                    f.size, ' bytes, last modified: ',
+    //                    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+    //                    '</li>');
+    //        console.log(f);
+    //    }
+    //    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    //}
+
+    //document.getElementById('files').addEventListener('change', handleFileSelect, false);
   </script>
 
 </asp:Content>
@@ -118,6 +180,7 @@
     <form id="frm" runat="server">
         <asp:HiddenField ID="hdnTimestamps" runat="server" />
         <asp:HiddenField ID="hdnWindows" runat="server" />
+        <asp:HiddenField ID="hdnDuration" runat="server" />
         <div class="header">
             <div class="title">
                 SNIPS
@@ -129,27 +192,34 @@
         </div>
 
         <div class="upload">
+            <%--<output id="list"></output>--%>
             <input type="file" id="files" name="files[]" accept=".mov,.mp4,.m4v" onchange="setFileInfo(this.files)">
-            <output id="list"></output>
-            <output id="infos"></output>
-            <label class="btn btn-default btn-lg" for="video">
-                <input type="file" id="video" accept=".mov,.mp4,.m4v" style="display:none">
-                Upload
+            <label class="btn btn-default btn-lg" for="files">
+                <i class="fa fa-cloud-upload"></i>&nbsp Upload
             </label>
+            <output id="infos"></output>
 
             <p style="margin-bottom: 0px">Max video length: 30 minutes</p>
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
         <div class="windows" id ="timeInputs">
-              Time Stamp:<br>
-              <input type="text" class="times" id ="txtTime1">
-              <br>
-              Window Size (Seconds):<br>
-              <input type="text" class="windowsizes" id="txtWindow1"> <br>
-            <div id ="addmore2"></div>
+            <div class="form-group row">
+                <div class="form-column">
+                    <label for="txtTime1">Time Stamp:</label>
+                    <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
+                </div>
+                <div class="form-column">
+                    <label for="txtWindow1">Window Size:</label>
+                    <input type="text" class="windowsizes form-control" id ="txtWindow1" placeholder="0">
+                    <small class="text-muted">(seconds)</small>
+                </div>
+            </div>
+<%--            <div class="form-group row">
+                <div id ="addmore2"></div>
+            </div>--%>
         </div>
         <div class="windows">
-            <button type ="button" class="btn btn-default" id ="morefields" onclick ="addMoreTimes();">  <strong>+</strong> </button>
+            <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
         </div>
 
         <div class="submit">
@@ -160,65 +230,6 @@
         <p id="pResults" runat="server"></p>
     </form>
 
-
-<script>
-    var myVideos = [];
-    window.URL = window.URL || window.webkitURL;
-    function setFileInfo(files) {
-        myVideos.push(files[0]);
-        var video = document.createElement('video');
-        video.preload = 'metadata';
-        video.onloadedmetadata = function () {
-            window.URL.revokeObjectURL(this.src)
-            var duration = video.duration;
-            myVideos[myVideos.length - 1].duration = duration;
-            updateInfos();
-        }
-        video.src = URL.createObjectURL(files[0]);;
-    }
-
-    function updateInfos() {
-        document.querySelector('#infos').innerHTML = "";
-        for (i = 0; i < myVideos.length; i++) {
-            document.querySelector('#infos').innerHTML += "<div>" + myVideos[i].name + " duration: " + myVideos[i].duration + '</div>';
-        }
-    }
-
-    function handleFileSelect(evt) {
-        var files = evt.target.files; // FileList object
-
-        // files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0, f; f = files[i]; i++) {
-            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                        f.size, ' bytes, last modified: ',
-                        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                        '</li>');
-            console.log(f);
-        }
-        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-    }
-
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-</script>
-
-<script>
-    var num = 2;
-    function addMoreTimes() {
-        var dummy = 'Time Stamp:<br> <input type="text" class="times" id="txtTime' + num + '"> <br> Window Size (Seconds):<br> <input type="text" class="windowsizes" id="txtWindow' + num + '"> <br> <div id ="addmore'+(num+1)+'"></div>';
-        num = num + 1;
-        document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
-        masking();
-    }
-    function masking() {
-        $('.times').each(function () {
-            $(this).mask("00:00");
-        });
-        $('.windowsizes').each(function () {
-            $(this).mask("000");
-        });
-    }
-</script>
 </asp:Content>
 
 

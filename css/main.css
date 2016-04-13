@@ -42,7 +42,34 @@ body {
     text-align: center;
     background-color: rgb(104,176,172);
 }
+.form-group:last-child {
+    margin-bottom: 0;
+}
+.form-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 130px;
+
+}
+input[type="text"] {
+    text-align: center;
+    width: 85px;
+    margin: auto;
+}
+#morefields {
+    border-radius: 24px;
+    width: 40px;
+    height: 40px;
+}
 .submit{
     padding: 20px;
     text-align: center;
+}
+input[type="file"] {
+    position: fixed;
+    right: 100%;
+    bottom: 100%;
+}
+#infos div {
+    color: #273B69;
 }
