@@ -27,8 +27,6 @@
                 }
                 String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
                 String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
-                //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
-                //pResults.InnerText = results2;
             }
             else
             {
@@ -291,9 +289,6 @@
         <div class="submit">
             <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); $('#frm').submit();" value="Submit" />
         </div>
-
-        <button type="submit">Test Snippetting</button>
-        <p id="pResults" runat="server"></p>
     </form>
 
 </asp:Content>
