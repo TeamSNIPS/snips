@@ -54,7 +54,6 @@
             if ($('#hdnSelected').val() != "") {
                 $('#hdnSelected').val($('#hdnSelected').val().substr(0, $('#hdnSelected').val().length - 1));
             }
-
         }
     </script>
 
@@ -84,6 +83,9 @@
                 <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
                     <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
                 </button>
+            </div>
+            <div class="text-center">
+                <a href="Default.aspx"">Back to Home</a>
             </div>
         </div>
     </form>
