@@ -9,6 +9,10 @@
 
         if (!IsPostBack)
         {
+            if (HttpContext.Current.Session["guid"] == null)
+            {
+                Response.Redirect("/Default.aspx");
+            }
             divResults.InnerHtml = Retrieve.GenerateHtml();
         }
         else
@@ -19,7 +23,7 @@
             String guid = HttpContext.Current.Session["guid"].ToString();
 
             //testing!!!
-            guid = "12345";
+            //guid = "12345";
 
             foreach (string str in selected_raw)
             {

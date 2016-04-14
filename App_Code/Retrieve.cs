@@ -23,12 +23,12 @@ public class Retrieve
 
     public static String GenerateHtml()
     {
-        HttpContext.Current.Session["guid"] = "12345";
-        HttpContext.Current.Session["timestamps"] = "01:34,12:59";
-        HttpContext.Current.Session["windows"] = "69:69,01:23";
+        //HttpContext.Current.Session["guid"] = "12345";
+        //HttpContext.Current.Session["timestamps"] = "01:34,12:59";
+        //HttpContext.Current.Session["windows"] = "69:69,01:23";
         HttpContext.Current.Session["width"] = 624;
         HttpContext.Current.Session["height"] = 352;
-        HttpContext.Current.Session["snipsNum"] = 2;
+        //HttpContext.Current.Session["snipsNum"] = 2;
 
         String guid = HttpContext.Current.Session["guid"].ToString();
         String[] timestamps = HttpContext.Current.Session["timestamps"].ToString().Split(',');
