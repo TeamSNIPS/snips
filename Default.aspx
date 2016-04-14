@@ -162,20 +162,20 @@
     // create additional time inputs
     var num = 2;
     function addMoreTimes() {
-        var dummy = '<div class="form-group row">' +
-                        '<div class="form-column">' +
+        var dummy =     '<div class="form-column">' +
                             '<label for="txtTime' + num + '">Time Stamp:</label>' +
                             '<input type="text" class="times form-control" id ="txtTime' + num + '" placeholder="00:00">' +
-                            '</div>' +
-                            '<div class="form-column">' +
+                        '</div>' +
+                        '<div class="form-column">' +
                                 '<label for="txtWindow' + num + '">Window Size:</label>' +
                                 '<input type="text" class="windowsizes form-control" id ="txtWindow' + num + '" placeholder="0">' +
                                 '<small class="text-muted">(seconds)</small>' +
-                            '</div>' +
-                        '</div>';
+                        '</div>' +
+                    '<div class="form-group row" id="addmore'+(num+1)+'">' +
+                    '</div>';
         num = num + 1;
-        $('#timeInputs').html($('#timeInputs').html() + dummy);
-        //document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
+        //$('.addmore'+(num-1)).innerHTML() += dummy;
+        document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
         masking();
     }
     function masking() {
@@ -263,7 +263,7 @@
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
         <div class="windows" id ="timeInputs">
-            <div class="form-group row">
+            <div class="form-group row" id="addmore1">
                 <div class="form-column">
                     <label for="txtTime1">Time Stamp:</label>
                     <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
@@ -274,9 +274,9 @@
                     <small class="text-muted">(seconds)</small>
                 </div>
             </div>
-<%--            <div class="form-group row">
-                <div id ="addmore2"></div>
-            </div>--%>
+            <div class="form-group row" id="addmore2">
+                <%-- <div id ="addmore2"></div>--%>
+            </div>
         </div>
         <div class="windows">
             <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
