@@ -25,8 +25,8 @@
                 {
                     System.IO.File.Delete(map_path + "\\cut1.mp4");
                 }
-                String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
-                String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
+                String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample2.mp4 -ss 00:08:50 -to 00:09:50 -c copy " + map_path + "\\cut.mp4");
+                //String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:50 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
                 //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
                 //pResults.InnerText = results2;
             }
@@ -59,7 +59,8 @@
                             TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
                             start = start.Subtract(window);
                             TimeSpan length = window.Add(window);
-                            ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss " + start.ToString() + " -i " + save_location + "\\" + file_name + " -to " + length.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+                            TimeSpan end = start.Add(length);                          
+                            ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                         }
                         HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
                         Response.Redirect("/Results.aspx");
