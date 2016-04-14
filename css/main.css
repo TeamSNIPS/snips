@@ -6,7 +6,6 @@ body {
     background-color: rgb(141,193,169);
 }
 .header{
-    margin: 0px;
     padding-top: 15px;
     padding-bottom: 8px;
     background-color: rgb(200,213,185);
@@ -28,12 +27,25 @@ body {
     text-align: center;
     background-color: rgb(74,124,89);
 }
+.download {
+    padding: 35px;
+    text-align: center;
+}
 
+.row {
+    padding-bottom: 30px;
+    padding-top: 25px;
+}
 .snippet:nth-of-type(odd) {
     background: rgb(74,124,89);
 }
 .snippet:nth-of-type(even) {
     background: #68B0AC;
+}
+
+.details {
+    padding-top:35px;
+    font-size: x-large;
 }
 
 .windows{

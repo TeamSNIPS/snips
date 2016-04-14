@@ -65,8 +65,10 @@ public class Retrieve
                                 "<dt><strong>Timestamp:</strong></dt><dd class='text-left'>" + timestamps[i - 1] + "</dd>" +
                                 "<dt><strong>Window Size:</strong></dt><dd class='text-left'>" + windows[i - 1] + "</dd>" +
                             "</dl>" +
-                            "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server'>" +
-                            "<label for='chkSnippet" + i + "'>Select this clip</label>" +
+                            "<div style='float:left; padding-left:40px;'>" +
+                                "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server' style='margin-right:5px;'>" +
+                                "<label for='chkSnippet" + i + "'>  Select snippet</label>" +
+                            "</div>" +
                         "</div>" +
                      "</div>";
         }

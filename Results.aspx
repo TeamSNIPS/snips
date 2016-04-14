@@ -63,24 +63,24 @@
 
     <form id="frm" runat="server">
         <asp:HiddenField id="hdnSelected" value="" runat="server" />
-        <div class="header">
-            <div class="title">
-                Results
-               
-                <img src="./images/crab.png" />
-                <div class="title2">
-                    <p style="margin-top: 0px">An auto-snippeting tool for video</p>
+        
+        <div class="container-fluid" style="width:100%">
+            <div class="header row">
+                <div class="col-md-12 text-center">
+                    <h1 class="title" style="width:100%;">Results</h1>              
+                    <img src="./images/crab.png" />
                 </div>
             </div>
-        </div>
         
-        <div class="container" style="width:100%">
+        
             <div id="divResults" runat="server">
             </div>
 
-            <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
-                <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
-            </button>
+            <div class="row download" >
+                <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
+                    <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
+                </button>
+            </div>
         </div>
     </form>
 </asp:Content>
