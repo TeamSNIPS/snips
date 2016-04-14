@@ -57,6 +57,7 @@ public class Retrieve
                         "<div class='col-md-6 text-center'>" +
                             "<video class='video' width='" + width + "' height='" + height + "' controls>" +
                                 "<source src='/videos/" + guid + "/Snippet_" + i + ".mp4' type='video/mp4'>" +
+                                "Your browser does not support the video tag." +
                             "</video>" +
                         "</div>"+
                         "<div class='details col-md-6 text-center'>" +
