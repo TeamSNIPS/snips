@@ -30,10 +30,9 @@ body {
     padding: 35px;
     text-align: center;
 }
-
 .row {
-    padding-bottom: 0px;
-    padding-top: 0px;
+    padding-bottom: 20px;
+    padding-top: 35px;
 }
 .snippet:nth-of-type(odd) {
     background: rgb(74,124,89);
@@ -53,14 +52,13 @@ body {
     text-align: center;
     background-color: rgb(104,176,172);
 }
-.form-group:last-child {
-    margin-bottom: 0;
+.form-group {
+    margin-bottom: 0px;
 }
 .form-column {
     display: inline-block;
     vertical-align: top;
     width: 130px;
-
 }
 input[type="text"] {
     text-align: center;

@@ -64,12 +64,10 @@
 
     </div>
     <div class="container text-center">
-        <div class="row copyright">
+        <div class="row footer">
             <div class="col-md-12">
                 Copyright &copy <%=DateTime.Now.Year%> SNIPS
             </div>
-        </div>
-        <div class="row ffmpeg-license">
             <div class="col-md-12">
                 This software uses code of 
                 <a href=http://ffmpeg.org>FFmpeg</a> 
@@ -78,7 +76,7 @@
                 and its source can be downloaded 
                 <a href=link_to_your_sources>here</a>.
             </div>
-        </div>       
+        </div>      
     </div>
 </body>
 </html>
