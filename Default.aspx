@@ -25,8 +25,8 @@
                 {
                     System.IO.File.Delete(map_path + "\\cut1.mp4");
                 }
-                String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + map_path + "\\sample2.mp4 -ss 00:08:50 -to 00:09:50 -c copy " + map_path + "\\cut.mp4");
-                //String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:50 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
+                String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
+                String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
                 //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
                 //pResults.InnerText = results2;
             }
@@ -178,7 +178,7 @@
                                 '<input type="text" class="windowsizes form-control" id ="txtWindow' + num + '" placeholder="0">' +
                                 '<small class="text-muted">(seconds)</small>' +
                         '</div>' +
-                    '<div class="form-group row" id="addmore'+(num+1)+'">' +
+                    '<div class="form-group" id="addmore'+(num+1)+'">' +
                     '</div>';
         num = num + 1;
         //$('.addmore'+(num-1)).innerHTML() += dummy;
@@ -270,7 +270,7 @@
             <p style="margin: 0px">File formats accepted: .mov, .mp4, .m4v</p>
         </div>
         <div class="windows" id ="timeInputs">
-            <div class="form-group row" id="addmore1">
+            <div class="form-group" id="addmore1">
                 <div class="form-column">
                     <label for="txtTime1">Time Stamp:</label>
                     <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
@@ -281,20 +281,23 @@
                     <small class="text-muted">(seconds)</small>
                 </div>
             </div>
-            <div class="form-group row" id="addmore2">
+            <div class="form-group" id="addmore2">
                 <%-- <div id ="addmore2"></div>--%>
             </div>
         </div>
+
+        
         <div class="windows">
             <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
         </div>
-
         <div class="submit">
             <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); $('#frm').submit();" value="Submit" />
         </div>
 
         <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
+
+        
     </form>
 
 </asp:Content>
