@@ -51,14 +51,14 @@
                         {
                             TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
                             int temp = Convert.ToInt32(window_sizes[i]);
-                            int mins = temp % 60;
+                            int mins = temp / 60;
                             string win_sizes = "0" + mins + ":";
-                            win_sizes += (temp / 60);
+                            win_sizes += (temp % 60);
+                            if (temp % 60 < 10)
+                                win_sizes += "0";
                             TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
                             start = start.Subtract(window);
                             TimeSpan length = window.Add(window);
-                            Console.WriteLine(start.ToString());
-                            string x = "C:\\ffmpeg.exe" + "-ss " + start.ToString() + " -i " + save_location + "\\" + file_name + " -to " + length.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4";
                             ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss " + start.ToString() + " -i " + save_location + "\\" + file_name + " -to " + length.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                         }
                         HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
