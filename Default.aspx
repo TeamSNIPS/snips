@@ -52,7 +52,15 @@
                             TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
                             int temp = Convert.ToInt32(window_sizes[i]);
                             int mins = temp / 60;
-                            string win_sizes = "0" + mins + ":";
+                            string win_sizes;
+                            if (mins >= 10)
+                            {
+                                win_sizes = mins + ":";
+                            }
+                            else
+                            {
+                                win_sizes = "0" + mins + ":";
+                            }                        
                             win_sizes += (temp % 60);
                             if (temp % 60 < 10)
                                 win_sizes += "0";
