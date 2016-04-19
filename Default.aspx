@@ -286,6 +286,10 @@
         }
     }
 
+    function openSnippy() {
+        document.getElementById("processing-snippy").style.width = "100%";
+    }
+
     //function handleFileSelect(evt) {
     //    var files = evt.target.files; // FileList object
 
@@ -364,6 +368,14 @@
         <button type="submit">Test Snippetting</button>
         <p id="pResults" runat="server"></p>
 
+        <div id="processing-snippy" class="overlay">
+            <h1>Processing...</h1>
+            <p><strong>Do not leave this page!</strong></p>
+            <p>Your video clips are processing. Your results will be displayed shortly.</p>
+            <div class="overlay-content">
+                <img src="http://45.media.tumblr.com/ac869f256984ecd84491dcf0815b8344/tumblr_nn4zjshHba1sscxw7o1_400.gif">
+            </div>
+        </div>
         
     </form>
 

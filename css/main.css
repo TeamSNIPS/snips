@@ -82,3 +82,25 @@ input[type="file"] {
 #infos div {
     color: #273B69;
 }
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    background-color: #68B0AC;
+    overflow-x: hidden; 
+    text-align: center;
+    top: 0;
+    left: 0;
+    padding-top: 25px;
+}
+
+.overlay-content {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.overlay strong {
+    color: #FF2323;    
+}
