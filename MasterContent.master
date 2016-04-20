@@ -35,6 +35,7 @@
     <script type="text/javascript" src="./js/jquery.validate.additional.methods.js"></script>
     <script type="text/javascript" src="./js/jquery.mask.min.js"></script>
     <script type="text/javascript" src="./js/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="./js/moment.js"></script>
     <script type="text/javascript" src="./js/jquery.prevent-double-submit.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     

@@ -53,9 +53,9 @@
                             int temp = Convert.ToInt32(window_sizes[i]);
                             int mins = temp / 60;
                             string win_sizes = "0" + mins + ":";
-                            win_sizes += (temp % 60);
                             if (temp % 60 < 10)
                                 win_sizes += "0";
+                            win_sizes += (temp % 60);
                             TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
                             start = start.Subtract(window);
                             TimeSpan length = window.Add(window);
@@ -86,7 +86,7 @@
         $('#frm').preventDoubleSubmission();
 
         $('.times').each(function () {
-            $(this).mask("00:00");
+            $(this).mask("00:00", { reverse: true });
         });
         $('.windowsizes').each(function () {
             $(this).mask("000");
@@ -149,9 +149,65 @@
             });
         });
     });
+
+    var error = "";
+    var time_stamps = [];
+    var windows = [];
+
+    function check_time_bounds() {
+        var duration = moment().hour(12).minute(0).second($('#hdnDuration').val());
+        for (var i = 0; i < time_stamps.length; i++) {
+            var split_time = time_stamps[i].split(':');
+            var time_stamp = moment().hour(12).minute(split_time[0]).second(split_time[1]);
+            var begin = time_stamp.subtract(parseInt(windows[i]), 'seconds');
+            var end = time_stamp.add(parseInt(windows[i]), 'seconds');
+            var zero = moment().hour(12).minute(0).second(0);
+            if (moment.max(time_stamp, duration) == time_stamp) {
+                error = "Time stamp: " + time_stamp + " is out of bounds.";
+                return false;
+            }
+            if (moment.max(duration, end) == end) {
+                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
+                return false;
+            }
+            if (moment.max(zero, begin) == zero) {
+                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
+                return false;
+            }
+
+            return true;
+
+        }
+
+
+        return true;
+    }
+
+    function validate_form() {
+        var valid = true;
+        time_stamps = $('#hdnTimestamps').val().split(',');
+        windows = $('#hdnWindows').val().split(',');
+        
+
+        if (time_stamps.length == 0 || windows.length == 0 || time_stamps.length != windows.length) {
+            error = "One or more inputs is empty.";
+            valid = false;
+        } else if (!check_time_bounds()) {
+            valid = false;
+        }
+
+        if (valid) {
+            $('#frm').submit();
+        } else {
+            alert(error);
+        }
+    }
     function saveValues() {
         var time_stamps = "";
         $('.times').each(function () {
+            if ($(this).val().indexOf(':') == -1) {
+                time_stamps += '00:';
+            }
             time_stamps += $(this).val() + ",";
         });
         time_stamps = time_stamps.substr(0, time_stamps.length - 1);
@@ -291,7 +347,7 @@
             <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
         </div>
         <div class="submit">
-            <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); $('#frm').submit();" value="Submit" />
+            <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); validate_form();" value="Submit" />
         </div>
 
         <button type="submit">Test Snippetting</button>
