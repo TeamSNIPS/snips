@@ -104,3 +104,8 @@ input[type="file"] {
 .overlay strong {
     color: #FF2323;    
 }
+
+.h4, h4 {
+    font-size: 18px;
+    margin: 20px, 0 0;
+}
