@@ -37,10 +37,7 @@
                         ProcessVideo.StartProcess("C:\\ffmpeg.exe", argument);
 
                     }
-                    //var mi = new MediaInfoLib.MediaInfo();
-                    //mi.Open(save_location + "\\" + file_name);
-                    //Console.WriteLine(mi.Inform());
-                    //mi.Close();
+                    Retrieve.GetWidthHeight(save_location, file_name);
                     HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
                     Response.Redirect("/Results.aspx");
                 }
@@ -48,8 +45,6 @@
                 {
 
                 }
-
-
             }
         }
     }
