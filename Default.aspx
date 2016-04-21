@@ -6,7 +6,6 @@
 
     protected void Page_Load(object sender, System.EventArgs e) {
 
-        bool testingFFMpeg = false;
         if (!IsPostBack)
         {
 
@@ -15,78 +14,60 @@
         {
             String map_path = HttpContext.Current.Server.MapPath(".");
 
-            if (testingFFMpeg)
+            if (files.PostedFile != null && files.PostedFile.ContentLength > 0)
             {
-                if ((System.IO.File.Exists(map_path + "\\cut.mp4")))
-                {
-                    System.IO.File.Delete(map_path + "\\cut.mp4");
-                }
-                if ((System.IO.File.Exists(map_path + "\\cut1.mp4")))
-                {
-                    System.IO.File.Delete(map_path + "\\cut1.mp4");
-                }
-                String result = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:09:00 -i " + map_path + "\\sample2.mp4 -to 00:03:00 -c copy " + map_path + "\\cut.mp4");
-                String result1 = ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-ss 00:08:20 -i " + map_path + "\\sample2.mp4 -to 00:01:00 -c copy " + map_path + "\\cut1.mp4");
-                //String results2 = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries format=size -of default=noprint_wrappers=1 "+ map_path +"\\cut.mp4");
-                //pResults.InnerText = results2;
-            }
-            else
-            {
-                if (files.PostedFile != null && files.PostedFile.ContentLength > 0)
-                {
-                    String guid = Guid.NewGuid().ToString();
-                    HttpContext.Current.Session["guid"] = guid;
-                    HttpContext.Current.Session["timestamps"] = hdnTimestamps.Value;
-                    HttpContext.Current.Session["windows"] = hdnWindows.Value;
+                String guid = Guid.NewGuid().ToString();
+                HttpContext.Current.Session["guid"] = guid;
+                HttpContext.Current.Session["timestamps"] = hdnTimestamps.Value;
+                HttpContext.Current.Session["windows"] = hdnWindows.Value;
 
-                    string file_name = System.IO.Path.GetFileName(files.PostedFile.FileName);
-                    String save_location = map_path + "\\videos\\" + guid;
-                    Directory.CreateDirectory(save_location);
-                    try
+                string file_name = System.IO.Path.GetFileName(files.PostedFile.FileName);
+                String save_location = map_path + "\\videos\\" + guid;
+                Directory.CreateDirectory(save_location);
+                try
+                {
+                    files.PostedFile.SaveAs(save_location + "\\" + file_name);
+                    String[] time_stamps = hdnTimestamps.Value.Split(',');
+                    String[] window_sizes = hdnWindows.Value.Split(',');
+                    for (int i = 0; i < time_stamps.Length; i++)
                     {
-                        files.PostedFile.SaveAs(save_location + "\\" + file_name);
-                        String[] time_stamps = hdnTimestamps.Value.Split(',');
-                        String[] window_sizes = hdnWindows.Value.Split(',');
-                        for (int i = 0; i < time_stamps.Length; i++)
+                        TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
+                        int temp = Convert.ToInt32(window_sizes[i]);
+                        int mins = temp / 60;
+
+                        string win_sizes;
+                        if (mins >= 10)
                         {
-                            TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
-                            int temp = Convert.ToInt32(window_sizes[i]);
-                            int mins = temp / 60;
-
-                            string win_sizes;
-                            if (mins >= 10)
-                            {
-                                win_sizes = mins + ":";
-                            }
-                            else
-                            {
-                                win_sizes = "0" + mins + ":";
-                            }                        
-
-                            if (temp % 60 < 10)
-                                win_sizes += "0";
-                            win_sizes += (temp % 60);
-                            TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
-                            start = start.Subtract(window);
-                            TimeSpan length = window.Add(window);
-                            TimeSpan end = start.Add(length);                          
-                            ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+                            win_sizes = mins + ":";
                         }
-                        
-                        var mi = new MediaInfoLib.MediaInfo();
-                        mi.Open(save_location + "\\" + file_name);
-                        Console.WriteLine(mi.Inform());
-                        mi.Close();
-                        HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
-                        Response.Redirect("/Results.aspx");
-                    }
-                    catch (Exception ex)
-                    {
+                        else
+                        {
+                            win_sizes = "0" + mins + ":";
+                        }
 
+                        if (temp % 60 < 10)
+                            win_sizes += "0";
+                        win_sizes += (temp % 60);
+                        TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
+                        start = start.Subtract(window);
+                        TimeSpan length = window.Add(window);
+                        TimeSpan end = start.Add(length);
+                        ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                     }
 
+                    //var mi = new MediaInfoLib.MediaInfo();
+                    //mi.Open(save_location + "\\" + file_name);
+                    //Console.WriteLine(mi.Inform());
+                    //mi.Close();
+                    HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
+                    Response.Redirect("/Results.aspx");
+                }
+                catch (Exception ex)
+                {
 
                 }
+
+
             }
         }
     }
