@@ -62,7 +62,6 @@
                             {
                                 win_sizes = "0" + mins + ":";
                             }                        
-                            win_sizes += (temp % 60);
 
                             if (temp % 60 < 10)
                                 win_sizes += "0";
