@@ -185,8 +185,11 @@
         windows = $('#hdnWindows').val().split(',');
         
 
-        if (time_stamps.length == 0 || windows.length == 0 || time_stamps.length != windows.length) {
+        if (time_stamps[0] == "00:" || windows[0] == "" || time_stamps.length != windows.length) {
             error = "One or more inputs is empty.";
+            valid = false;
+        } else if (!videoUploaded) {
+            error = "No video uploaded.";
             valid = false;
         } else if (!check_time_bounds()) {
             valid = false;
@@ -248,6 +251,7 @@
 
     // get video metadata
     var myVideos = [];
+    var videoUploaded = false;
     window.URL = window.URL || window.webkitURL;
     function setFileInfo(files) {
         myVideos.pop();
@@ -255,6 +259,7 @@
         var video = document.createElement('video');
         video.preload = 'metadata';
         video.onloadedmetadata = function () {
+            videoUploaded = true;
             window.URL.revokeObjectURL(this.src)
             var duration = video.duration;
             $('#hdnDuration').val(duration);
