@@ -69,30 +69,28 @@
             $(this).mask("000");
         });
 
-        $('#frm').validate({
-
-        });
-        $('.times').each(function () {
-            $(this).rules('add', {
-                required: true,
-                messages: {
-                    required: "Enter a time stamp.",
-                }
-            });
-        });
-        $('.windowsizes').each(function () {
-            $(this).rules('add', {
-                required: true,
-                messages: {
-                    required: "Enter a window size.",
-                }
-            });
-        });
     });
 
     var error = "";
     var time_stamps = [];
     var windows = [];
+
+    function check_time_input() {
+        var duration = $('#hdnDuration').val();
+        if (parseInt(duration) > 1800) {
+            error = "Video length over 30 minutes";
+            return false;
+        }
+
+        for (var i = 0; i < time_stamps.length; i++) {
+            var split_time = time_stamps[i].split(':');
+            if (parseInt(split_time[0]) >= 30 || parseInt(split_time[1]) >= 60){
+                error = "Invalid time stamp."
+                return false;
+            }
+        }
+        return true;
+    }
 
     function check_time_bounds() {
         var duration = moment().hour(12).minute(0).second($('#hdnDuration').val());
@@ -138,6 +136,8 @@
             valid = false;
         } else if (!videoUploaded) {
             error = "No video uploaded.";
+            valid = false;
+        } else if (!check_time_input()) {
             valid = false;
         } else if (!check_time_bounds()) {
             valid = false;
