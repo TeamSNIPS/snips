@@ -29,32 +29,14 @@
                     files.PostedFile.SaveAs(save_location + "\\" + file_name);
                     String[] time_stamps = hdnTimestamps.Value.Split(',');
                     String[] window_sizes = hdnWindows.Value.Split(',');
-                    for (int i = 0; i < time_stamps.Length; i++)
+
+                    ArrayList arguments = ProcessVideo.GetArguments(time_stamps, window_sizes, save_location, file_name);
+
+                    foreach (String argument in arguments)
                     {
-                        TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
-                        int temp = Convert.ToInt32(window_sizes[i]);
-                        int mins = temp / 60;
+                        ProcessVideo.StartProcess("C:\\ffmpeg.exe", argument);
 
-                        string win_sizes;
-                        if (mins >= 10)
-                        {
-                            win_sizes = mins + ":";
-                        }
-                        else
-                        {
-                            win_sizes = "0" + mins + ":";
-                        }
-
-                        if (temp % 60 < 10)
-                            win_sizes += "0";
-                        win_sizes += (temp % 60);
-                        TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
-                        start = start.Subtract(window);
-                        TimeSpan length = window.Add(window);
-                        TimeSpan end = start.Add(length);
-                        ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                     }
-
                     //var mi = new MediaInfoLib.MediaInfo();
                     //mi.Open(save_location + "\\" + file_name);
                     //Console.WriteLine(mi.Inform());
