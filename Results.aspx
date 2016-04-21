@@ -72,7 +72,7 @@
                 <div class="col-md-12 text-center">
                     <h1 class="title" style="width:100%;">Results</h1>              
                     <img src="./images/crab.png" />
-                    <h4>Warning, closing this page will delete all files!</h4>
+                    <h4>Warning, these videos will not be available for download after leaving or refreshing the page!</h4>
                 </div>
             </div>
         
