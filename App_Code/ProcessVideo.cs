@@ -26,7 +26,6 @@ public class ProcessVideo
         ArrayList arguments = new ArrayList();
         for (int i = 0; i < time_stamps.Length; i++)
         {
-            TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
             int temp = Convert.ToInt32(window_sizes[i]);
             int mins = temp / 60;
 
@@ -43,9 +42,14 @@ public class ProcessVideo
             if (temp % 60 < 10)
                 win_sizes += "0";
             win_sizes += (temp % 60);
-            TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
-            start = start.Subtract(window);
-            TimeSpan length = window.Add(window);
+
+            TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
+            TimeSpan length = TimeSpan.Parse("00:" + win_sizes);
+
+            //TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
+            //start = start.Subtract(window);
+            //TimeSpan length = window.Add(window);
+
             TimeSpan end = start.Add(length);
             arguments.Add("-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
         }

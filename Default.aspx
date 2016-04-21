@@ -60,7 +60,6 @@
 <script type="text/javascript">
 
     $(function () {
-        // SAMPLE VALIDATE CODE
         $('#frm').preventDoubleSubmission();
 
         $('.times').each(function () {
@@ -71,44 +70,7 @@
         });
 
         $('#frm').validate({
-<%--            rules: {
-                <%=video.UniqueID%>: { required: true },
-                <%=time1.UniqueID%>: { required: true },
-                <%=window1.UniqueID%>: { required: true},
-                <%=selUserType.UniqueID%>: { required: true },
-                <%=txtFax.UniqueID%>: { required: function(element){ return $('#ddlFax').val() == 'fax'; }, phoneUS: true },
 
-            },
-            messages: {
-                <%=video.UniqueID%>: { 
-                    required: 'Please upload a video file.'
-                },
-                <%=time1.UniqueID%>: { 
-                    required: 'Please enter valid timestamps.'
-                },
-                <%=window1.UniqueID%>: { 
-                    required: 'Please enter an Email Address.'
-                }, 
-                <%=selUserType.UniqueID%>: { 
-                    required: 'Please select a User Type.',
-                },                 
-            },
-            highlight: function(element) {
-                $(element).parent().addClass("field-error");
-            },
-            unhighlight: function(element) {
-                $(element).parent().removeClass("field-error");
-            },
-            errorPlacement: function(error, element) {
-                error.insertAfter(element.parent());
-            },
-            invalidHandler: function(form, validator) {
-                var errors = validator.numberOfInvalids();
-                if (errors) {
-                        $("html, body").animate({ scrollTop: 0 }, "fast");
-                        $('#spnErrors').html('Please correct the form errors below.');
-                }
-            }--%>
         });
         $('.times').each(function () {
             $(this).rules('add', {
@@ -138,10 +100,14 @@
             var split_time = time_stamps[i].split(':');
             var time_stamp = moment().hour(12).minute(split_time[0]).second(split_time[1]);
             var begin = moment().hour(12).minute(split_time[0]).second(split_time[1]);
-            begin.subtract(parseInt(windows[i]), 'seconds');
+            //begin.subtract(parseInt(windows[i]), 'seconds');
             var end = moment().hour(12).minute(split_time[0]).second(split_time[1]);
             end.add(parseInt(windows[i]), 'seconds');
             var zero = moment().hour(12).minute(0).second(0);
+            if (windows[i] == '0' || windows[i] == '00' || windows[i] == '000') {
+                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is not a valid window size.";
+                return false;
+            }
             if (moment.max(time_stamp, duration) == time_stamp) {
                 error = "Time stamp: " + time_stamp[i] + " is out of bounds.";
                 return false;
@@ -150,10 +116,10 @@
                 error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
                 return false;
             }
-            if (moment.max(zero, begin) == zero) {
-                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
-                return false;
-            }
+            //if (moment.max(zero, begin) == zero) {
+            //    error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
+            //    return false;
+            //}
 
         }
 
@@ -211,7 +177,7 @@
                             '<input type="text" class="times form-control" id ="txtTime' + num + '" placeholder="00:00">' +
                         '</div>' +
                         '<div class="form-column">' +
-                                '<label for="txtWindow' + num + '">Window Size:</label>' +
+                                '<label for="txtWindow' + num + '">Snippet Length:</label>' +
                                 '<input type="text" class="windowsizes form-control" id ="txtWindow' + num + '" placeholder="0">' +
                                 '<small class="text-muted">(seconds)</small>' +
                         '</div>' +
@@ -319,7 +285,7 @@
                     <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
                 </div>
                 <div class="form-column">
-                    <label for="txtWindow1">Window Size:</label>
+                    <label for="txtWindow1">Snippet Length:</label>
                     <input type="text" class="windowsizes form-control" id ="txtWindow1" placeholder="0">
                     <small class="text-muted">(seconds)</small>
                 </div>
