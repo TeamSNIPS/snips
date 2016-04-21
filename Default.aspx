@@ -184,7 +184,6 @@
                     '<div class="form-group" id="addmore'+(num+1)+'">' +
                     '</div>';
         num = num + 1;
-        //$('.addmore'+(num-1)).innerHTML() += dummy;
         document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
         masking();
     }
@@ -291,7 +290,6 @@
                 </div>
             </div>
             <div class="form-group" id="addmore2">
-                <%-- <div id ="addmore2"></div>--%>
             </div>
         </div>
 
