@@ -21,15 +21,24 @@ public class Retrieve
         //
     }
 
+    public static void GetWidthHeight(string location, string filename)
+    {
+        string result = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries stream=width,height -of default=noprint_wrappers=1 " + location + "\\" + filename + "");
+        int marker = result.IndexOf("width=");
+        result = result.Substring(marker + 6);
+        marker = result.IndexOf('\r');
+        string width = result.Substring(0, marker);
+        marker = result.IndexOf("height=");
+        result = result.Substring(marker + 7);
+        marker = result.IndexOf('\r');
+        string height = result.Substring(0, marker);
+
+        HttpContext.Current.Session["width"] = width;
+        HttpContext.Current.Session["height"] = height;
+    }
+
     public static String GenerateHtml()
     {
-        //HttpContext.Current.Session["guid"] = "12345";
-        //HttpContext.Current.Session["timestamps"] = "01:34,12:59";
-        //HttpContext.Current.Session["windows"] = "69:69,01:23";
-        HttpContext.Current.Session["width"] = 624;
-        HttpContext.Current.Session["height"] = 352;
-        //HttpContext.Current.Session["snipsNum"] = 2;
-
         String guid = HttpContext.Current.Session["guid"].ToString();
         String[] timestamps = HttpContext.Current.Session["timestamps"].ToString().Split(',');
         String[] windows = HttpContext.Current.Session["windows"].ToString().Split(',');
