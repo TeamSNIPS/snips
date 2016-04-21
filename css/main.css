@@ -6,14 +6,12 @@ body {
     background-color: rgb(141,193,169);
 }
 .header{
-    margin: 0px;
     padding-top: 15px;
     padding-bottom: 8px;
     background-color: rgb(200,213,185);
 }
 .title {
     margin: auto;
-    width: 30%;
     font-size: 70px;
     text-align: center;
     font-weight: bolder;
@@ -28,12 +26,24 @@ body {
     text-align: center;
     background-color: rgb(74,124,89);
 }
-
+.download {
+    padding: 35px;
+    text-align: center;
+}
+.row {
+    padding-bottom: 20px;
+    padding-top: 35px;
+}
 .snippet:nth-of-type(odd) {
     background: rgb(74,124,89);
 }
 .snippet:nth-of-type(even) {
     background: #68B0AC;
+}
+
+.details {
+    padding-top:35px;
+    font-size: x-large;
 }
 
 .windows{
@@ -42,7 +52,60 @@ body {
     text-align: center;
     background-color: rgb(104,176,172);
 }
+.form-group {
+    margin-bottom: 0px;
+}
+.form-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 130px;
+}
+input[type="text"] {
+    text-align: center;
+    width: 85px;
+    margin: auto;
+}
+#morefields {
+    border-radius: 24px;
+    width: 40px;
+    height: 40px;
+}
 .submit{
     padding: 20px;
     text-align: center;
+}
+input[type="file"] {
+    position: fixed;
+    right: 100%;
+    bottom: 100%;
+}
+#infos div {
+    color: #273B69;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    background-color: #68B0AC;
+    overflow-x: hidden; 
+    text-align: center;
+    top: 0;
+    left: 0;
+    padding-top: 25px;
+}
+
+.overlay-content {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.overlay strong {
+    color: #FF2323;    
+}
+
+.h4, h4 {
+    font-size: 18px;
+    margin: 20px, 0 0;
 }

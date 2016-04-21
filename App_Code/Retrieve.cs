@@ -23,12 +23,12 @@ public class Retrieve
 
     public static String GenerateHtml()
     {
-        HttpContext.Current.Session["guid"] = "12345";
-        HttpContext.Current.Session["timestamps"] = "01:34,12:59";
-        HttpContext.Current.Session["windows"] = "69:69,01:23";
+        //HttpContext.Current.Session["guid"] = "12345";
+        //HttpContext.Current.Session["timestamps"] = "01:34,12:59";
+        //HttpContext.Current.Session["windows"] = "69:69,01:23";
         HttpContext.Current.Session["width"] = 624;
         HttpContext.Current.Session["height"] = 352;
-        HttpContext.Current.Session["snipsNum"] = 2;
+        //HttpContext.Current.Session["snipsNum"] = 2;
 
         String guid = HttpContext.Current.Session["guid"].ToString();
         String[] timestamps = HttpContext.Current.Session["timestamps"].ToString().Split(',');
@@ -57,6 +57,7 @@ public class Retrieve
                         "<div class='col-md-6 text-center'>" +
                             "<video class='video' width='" + width + "' height='" + height + "' controls>" +
                                 "<source src='/videos/" + guid + "/Snippet_" + i + ".mp4' type='video/mp4'>" +
+                                "Your browser does not support the video tag." +
                             "</video>" +
                         "</div>"+
                         "<div class='details col-md-6 text-center'>" +
@@ -65,8 +66,10 @@ public class Retrieve
                                 "<dt><strong>Timestamp:</strong></dt><dd class='text-left'>" + timestamps[i - 1] + "</dd>" +
                                 "<dt><strong>Window Size:</strong></dt><dd class='text-left'>" + windows[i - 1] + "</dd>" +
                             "</dl>" +
-                            "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server'>" +
-                            "<label for='chkSnippet" + i + "'>Select this clip</label>" +
+                            "<div style='float:left; padding-left:40px;'>" +
+                                "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server' style='margin-right:5px;'>" +
+                                "<label for='chkSnippet" + i + "'>  Select snippet</label>" +
+                            "</div>" +
                         "</div>" +
                      "</div>";
         }

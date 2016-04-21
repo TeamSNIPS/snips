@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="SNIPS | Results" Language="C#" MasterPageFile="MasterContent.master" %>
 
+<%@ Import Namespace="System.IO" %>
+
 <script runat="server">
 
     protected void Page_Load(object sender, System.EventArgs e)
@@ -7,6 +9,10 @@
 
         if (!IsPostBack)
         {
+            if (HttpContext.Current.Session["guid"] == null)
+            {
+                Response.Redirect("/Default.aspx");
+            }
             divResults.InnerHtml = Retrieve.GenerateHtml();
         }
         else
@@ -17,7 +23,7 @@
             String guid = HttpContext.Current.Session["guid"].ToString();
 
             //testing!!!
-            guid = "12345";
+            //guid = "12345";
 
             foreach (string str in selected_raw)
             {
@@ -31,6 +37,7 @@
             if (file_names.Count > 0)
             {
                 Retrieve.DownloadFiles(file_names);
+                File.Create(map_path + "/videos/" + guid + "/finished.txt").Close();
             }
         }
     }
@@ -47,7 +54,6 @@
             if ($('#hdnSelected').val() != "") {
                 $('#hdnSelected').val($('#hdnSelected').val().substr(0, $('#hdnSelected').val().length - 1));
             }
-
         }
     </script>
 
@@ -60,24 +66,28 @@
 
     <form id="frm" runat="server">
         <asp:HiddenField id="hdnSelected" value="" runat="server" />
-        <div class="header">
-            <div class="title">
-                Results
-               
-                <img src="./images/crab.png" />
-                <div class="title2">
-                    <p style="margin-top: 0px">An auto-snippeting tool for video</p>
+        
+        <div class="container-fluid" style="width:100%">
+            <div class="header row">
+                <div class="col-md-12 text-center">
+                    <h1 class="title" style="width:100%;">Results</h1>              
+                    <img src="./images/crab.png" />
+                    <h4>Warning, closing this page will delete all files!</h4>
                 </div>
             </div>
-        </div>
         
-        <div class="container" style="width:100%">
+        
             <div id="divResults" runat="server">
             </div>
 
-            <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
-                <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
-            </button>
+            <div class="row download">
+                <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
+                    <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
+                </button>
+            </div>
+            <div class="text-center">
+                <a href="Default.aspx"">Back to Home</a>
+            </div>
         </div>
     </form>
 </asp:Content>
