@@ -29,34 +29,18 @@
                     files.PostedFile.SaveAs(save_location + "\\" + file_name);
                     String[] time_stamps = hdnTimestamps.Value.Split(',');
                     String[] window_sizes = hdnWindows.Value.Split(',');
-                    for (int i = 0; i < time_stamps.Length; i++)
+
+                    ArrayList arguments = ProcessVideo.GetArguments(time_stamps, window_sizes, save_location, file_name);
+
+                    foreach (String argument in arguments)
                     {
-                        TimeSpan start = TimeSpan.Parse("00:" + time_stamps[i]);
-                        int temp = Convert.ToInt32(window_sizes[i]);
-                        int mins = temp / 60;
+                        ProcessVideo.StartProcess("C:\\ffmpeg.exe", argument);
 
-                        string win_sizes;
-                        if (mins >= 10)
-                        {
-                            win_sizes = mins + ":";
-                        }
-                        else
-                        {
-                            win_sizes = "0" + mins + ":";
-                        }
-
-                        if (temp % 60 < 10)
-                            win_sizes += "0";
-                        win_sizes += (temp % 60);
-                        TimeSpan window = TimeSpan.Parse("00:" + win_sizes);
-                        start = start.Subtract(window);
-                        TimeSpan length = window.Add(window);
-                        TimeSpan end = start.Add(length);
-                        ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                     }
-
-                    Retrieve.GetWidthHeight(save_location, file_name);
-
+                    //var mi = new MediaInfoLib.MediaInfo();
+                    //mi.Open(save_location + "\\" + file_name);
+                    //Console.WriteLine(mi.Inform());
+                    //mi.Close();
                     HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
                     Response.Redirect("/Results.aspx");
                 }
@@ -76,7 +60,6 @@
 <script type="text/javascript">
 
     $(function () {
-        // SAMPLE VALIDATE CODE
         $('#frm').preventDoubleSubmission();
 
         $('.times').each(function () {
@@ -86,67 +69,28 @@
             $(this).mask("000");
         });
 
-        $('#frm').validate({
-<%--            rules: {
-                <%=video.UniqueID%>: { required: true },
-                <%=time1.UniqueID%>: { required: true },
-                <%=window1.UniqueID%>: { required: true},
-                <%=selUserType.UniqueID%>: { required: true },
-                <%=txtFax.UniqueID%>: { required: function(element){ return $('#ddlFax').val() == 'fax'; }, phoneUS: true },
-
-            },
-            messages: {
-                <%=video.UniqueID%>: { 
-                    required: 'Please upload a video file.'
-                },
-                <%=time1.UniqueID%>: { 
-                    required: 'Please enter valid timestamps.'
-                },
-                <%=window1.UniqueID%>: { 
-                    required: 'Please enter an Email Address.'
-                }, 
-                <%=selUserType.UniqueID%>: { 
-                    required: 'Please select a User Type.',
-                },                 
-            },
-            highlight: function(element) {
-                $(element).parent().addClass("field-error");
-            },
-            unhighlight: function(element) {
-                $(element).parent().removeClass("field-error");
-            },
-            errorPlacement: function(error, element) {
-                error.insertAfter(element.parent());
-            },
-            invalidHandler: function(form, validator) {
-                var errors = validator.numberOfInvalids();
-                if (errors) {
-                        $("html, body").animate({ scrollTop: 0 }, "fast");
-                        $('#spnErrors').html('Please correct the form errors below.');
-                }
-            }--%>
-        });
-        $('.times').each(function () {
-            $(this).rules('add', {
-                required: true,
-                messages: {
-                    required: "Enter a time stamp.",
-                }
-            });
-        });
-        $('.windowsizes').each(function () {
-            $(this).rules('add', {
-                required: true,
-                messages: {
-                    required: "Enter a window size.",
-                }
-            });
-        });
     });
 
     var error = "";
     var time_stamps = [];
     var windows = [];
+
+    function check_time_input() {
+        var duration = $('#hdnDuration').val();
+        if (parseInt(duration) > 1800) {
+            error = "Video length over 30 minutes";
+            return false;
+        }
+
+        for (var i = 0; i < time_stamps.length; i++) {
+            var split_time = time_stamps[i].split(':');
+            if (parseInt(split_time[0]) >= 30 || parseInt(split_time[1]) >= 60){
+                error = "Invalid time stamp."
+                return false;
+            }
+        }
+        return true;
+    }
 
     function check_time_bounds() {
         var duration = moment().hour(12).minute(0).second($('#hdnDuration').val());
@@ -154,10 +98,14 @@
             var split_time = time_stamps[i].split(':');
             var time_stamp = moment().hour(12).minute(split_time[0]).second(split_time[1]);
             var begin = moment().hour(12).minute(split_time[0]).second(split_time[1]);
-            begin.subtract(parseInt(windows[i]), 'seconds');
+            //begin.subtract(parseInt(windows[i]), 'seconds');
             var end = moment().hour(12).minute(split_time[0]).second(split_time[1]);
             end.add(parseInt(windows[i]), 'seconds');
             var zero = moment().hour(12).minute(0).second(0);
+            if (windows[i] == '0' || windows[i] == '00' || windows[i] == '000') {
+                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is not a valid window size.";
+                return false;
+            }
             if (moment.max(time_stamp, duration) == time_stamp) {
                 error = "Time stamp: " + time_stamp[i] + " is out of bounds.";
                 return false;
@@ -166,10 +114,10 @@
                 error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
                 return false;
             }
-            if (moment.max(zero, begin) == zero) {
-                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
-                return false;
-            }
+            //if (moment.max(zero, begin) == zero) {
+            //    error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
+            //    return false;
+            //}
 
         }
 
@@ -183,8 +131,13 @@
         windows = $('#hdnWindows').val().split(',');
         
 
-        if (time_stamps.length == 0 || windows.length == 0 || time_stamps.length != windows.length) {
+        if (time_stamps[0] == "00:" || windows[0] == "" || time_stamps.length != windows.length) {
             error = "One or more inputs is empty.";
+            valid = false;
+        } else if (!videoUploaded) {
+            error = "No video uploaded.";
+            valid = false;
+        } else if (!check_time_input()) {
             valid = false;
         } else if (!check_time_bounds()) {
             valid = false;
@@ -224,14 +177,13 @@
                             '<input type="text" class="times form-control" id ="txtTime' + num + '" placeholder="00:00">' +
                         '</div>' +
                         '<div class="form-column">' +
-                                '<label for="txtWindow' + num + '">Window Size:</label>' +
+                                '<label for="txtWindow' + num + '">Snippet Length:</label>' +
                                 '<input type="text" class="windowsizes form-control" id ="txtWindow' + num + '" placeholder="0">' +
                                 '<small class="text-muted">(seconds)</small>' +
                         '</div>' +
                     '<div class="form-group" id="addmore'+(num+1)+'">' +
                     '</div>';
         num = num + 1;
-        //$('.addmore'+(num-1)).innerHTML() += dummy;
         document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
         masking();
     }
@@ -246,6 +198,7 @@
 
     // get video metadata
     var myVideos = [];
+    var videoUploaded = false;
     window.URL = window.URL || window.webkitURL;
     function setFileInfo(files) {
         myVideos.pop();
@@ -253,6 +206,7 @@
         var video = document.createElement('video');
         video.preload = 'metadata';
         video.onloadedmetadata = function () {
+            videoUploaded = true;
             window.URL.revokeObjectURL(this.src)
             var duration = video.duration;
             $('#hdnDuration').val(duration);
@@ -330,13 +284,12 @@
                     <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
                 </div>
                 <div class="form-column">
-                    <label for="txtWindow1">Window Size:</label>
+                    <label for="txtWindow1">Snippet Length:</label>
                     <input type="text" class="windowsizes form-control" id ="txtWindow1" placeholder="0">
                     <small class="text-muted">(seconds)</small>
                 </div>
             </div>
             <div class="form-group" id="addmore2">
-                <%-- <div id ="addmore2"></div>--%>
             </div>
         </div>
 
@@ -356,7 +309,7 @@
             <p><strong>Do not leave this page!</strong></p>
             <p>Your video clips are processing. Your results will be displayed shortly.</p>
             <div class="overlay-content">
-                <img src="http://45.media.tumblr.com/ac869f256984ecd84491dcf0815b8344/tumblr_nn4zjshHba1sscxw7o1_400.gif">
+                <img src="http://45.media.tumblr.com/ac869f256984ecd84491dcf0815b8344/tumblr_nn4zjshHba1sscxw7o1_400.gif" alt="Snippy graphic from Emmanuel Ortega. Tumblr Page: http://omg-emmanemsaurio-rex.tumblr.com/">
             </div>
         </div>
         
