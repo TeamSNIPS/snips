@@ -103,7 +103,7 @@
             end.add(parseInt(windows[i]), 'seconds');
             var zero = moment().hour(12).minute(0).second(0);
             if (windows[i] == '0' || windows[i] == '00' || windows[i] == '000') {
-                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is not a valid window size.";
+                error = "Snippet length: " + windows[i] + " with time stamp: " + time_stamps[i] + " is not a valid snippet length.";
                 return false;
             }
             if (moment.max(time_stamp, duration) == time_stamp) {
@@ -111,7 +111,7 @@
                 return false;
             }
             if (moment.max(duration, end) == end) {
-                error = "Window size: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
+                error = "Snippet length: " + windows[i] + " with time stamp: " + time_stamps[i] + " is out of bounds.";
                 return false;
             }
             //if (moment.max(zero, begin) == zero) {
@@ -130,11 +130,13 @@
         time_stamps = $('#hdnTimestamps').val().split(',');
         windows = $('#hdnWindows').val().split(',');
         
-
-        if (time_stamps[0] == "00:" || windows[0] == "" || time_stamps.length != windows.length) {
-            error = "One or more inputs is empty.";
-            valid = false;
-        } else if (!videoUploaded) {
+        for (var i = 0; i < time_stamps.length; i++) {
+            if (time_stamps[i] == "00:" || windows[i] == "") {
+                error = "One or more inputs is empty.";
+                valid = false;
+            } 
+        }
+        if (!videoUploaded) {
             error = "No video uploaded.";
             valid = false;
         } else if (!check_time_input()) {
@@ -144,6 +146,7 @@
         }
 
         if (valid) {
+            openSnippy();
             $('#frm').submit();
         } else {
             alert(error);

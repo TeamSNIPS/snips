@@ -47,6 +47,7 @@
 
     <script type="text/javascript">
         function getSelected() {
+            $('#hdnSelected').val("");
             var selected = [];
             $('input:checked').each(function () {
                 $('#hdnSelected').val($('#hdnSelected').val() + $(this).attr('name') + ",");
