@@ -184,7 +184,7 @@
     }
     function masking() {
         $('.times').each(function () {
-            $(this).mask("00:00");
+            $(this).mask("00:00", { reverse: true });
         });
         $('.windowsizes').each(function () {
             $(this).mask("000");
