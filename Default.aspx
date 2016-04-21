@@ -369,7 +369,7 @@
             <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); validate_form();" value="Submit" />
         </div>
 
-        <button type="submit">Test Snippetting</button>
+        <%--<button type="submit">Test Snippetting</button>--%>
         <p id="pResults" runat="server"></p>
 
         <div id="processing-snippy" class="overlay">
