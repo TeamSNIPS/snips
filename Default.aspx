@@ -73,6 +73,11 @@
                             TimeSpan end = start.Add(length);                          
                             ProcessVideo.StartProcess("C:\\ffmpeg.exe", "-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
                         }
+                        
+                        var mi = new MediaInfoLib.MediaInfo();
+                        mi.Open(save_location + "\\" + file_name);
+                        Console.WriteLine(mi.Inform());
+                        mi.Close();
                         HttpContext.Current.Session["snipsNum"] = time_stamps.Length;
                         Response.Redirect("/Results.aspx");
                     }
