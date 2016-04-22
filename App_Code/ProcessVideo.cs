@@ -51,7 +51,11 @@ public class ProcessVideo
             //TimeSpan length = window.Add(window);
 
             TimeSpan end = start.Add(length);
-            arguments.Add("-i " + save_location + "\\" + file_name + " -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+            if (file_name.Contains(".mp4"))
+                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+            else if (file_name.Contains(".mov"))
+                // include different arguments for videos ending in .mov?
+                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
         }
         return arguments;
     }
@@ -73,9 +77,9 @@ public class ProcessVideo
         process.Start();
         
         process.WaitForExit();
-        String error = process.StandardOutput.ReadToEnd();
-        //String output = process.StandardError.ReadToEnd();
+        String output = process.StandardOutput.ReadToEnd();
+        String error = process.StandardError.ReadToEnd();
         process.Dispose();
-        return error;
+        return output;
     }
 }

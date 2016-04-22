@@ -23,7 +23,7 @@ public class Retrieve
 
     public static void GetWidthHeight(string location, string filename)
     {
-        string result = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries stream=width,height -of default=noprint_wrappers=1 " + location + "\\" + filename + "");
+        string result = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries stream=width,height -of default=noprint_wrappers=1 \"" + location + "\\" + filename + "\"");
         int marker = result.IndexOf("width=");
         result = result.Substring(marker + 6);
         marker = result.IndexOf('\r');
