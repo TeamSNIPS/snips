@@ -55,10 +55,10 @@ public class ProcessVideo
                 arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
             else if (file_name.Contains(".mov"))
                 // include different arguments for videos ending in .mov
-                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -vcodec " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
             else if (file_name.Contains(".m4v"))
                 // include different arguments for videos ending in .m4v
-                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -vcodec " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
+                arguments.Add("-i \"" + save_location + "\\" + file_name + "\" -ss " + start.ToString() + " -to " + end.ToString() + " -c copy " + save_location + "\\Snippet_" + (i + 1) + ".mp4");
 
         }
         return arguments;
