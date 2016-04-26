@@ -185,6 +185,14 @@
         document.getElementById('addmore' + (num - 1)).innerHTML += dummy;
         masking();
     }
+    function removeTimes() {
+        if (num > 2) {
+            var dummy = '';
+            num = num - 1;
+            document.getElementById('addmore' + (num)).innerHTML = dummy;
+            masking();
+        }
+    }
     function masking() {
         $('.times').each(function () {
             $(this).mask("00:00", { reverse: true });
@@ -293,6 +301,8 @@
 
         
         <div class="windows">
+            <button type="button" class="btn btn-default" id="lessfields" onclick="removeTimes();">  <strong>-</strong> </button>
+            &nbsp
             <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
         </div>
         <div class="submit">
