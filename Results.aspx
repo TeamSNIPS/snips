@@ -56,6 +56,13 @@
                 $('#hdnSelected').val($('#hdnSelected').val().substr(0, $('#hdnSelected').val().length - 1));
             }
         }
+        function checked() {
+            if ($('input:checked').length > 0)
+                return true;
+            else
+                alert("Please select a snippet for download.");
+                return false;
+        }
     </script>
 
 </asp:Content>
@@ -82,7 +89,7 @@
             </div>
 
             <div class="row download">
-                <button type="button" class="btn btn-default btn-lg" onclick="javascript: getSelected(); $('#frm').submit();">
+                <button type="button" class="btn btn-default btn-lg" onclick="javascript: if (checked()) { getSelected(); $('#frm').submit(); }">
                     <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
                 </button>
             </div>
