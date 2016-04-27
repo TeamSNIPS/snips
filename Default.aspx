@@ -173,6 +173,7 @@
         var dummy =     '<div class="form-column">' +
                             '<label for="txtTime' + num + '">Time Stamp:</label>' +
                             '<input type="text" class="times form-control" id ="txtTime' + num + '" placeholder="00:00">' +
+                            '<small class="text-muted">(mm:ss)</small>' +
                         '</div>' +
                         '<div class="form-column">' +
                                 '<label for="txtWindow' + num + '">Snippet Length:</label>' +
@@ -288,6 +289,7 @@
                 <div class="form-column">
                     <label for="txtTime1">Time Stamp:</label>
                     <input type="text" class="times form-control" id ="txtTime1" placeholder="00:00">
+                    <small class="text-muted">(mm:ss)</small>
                 </div>
                 <div class="form-column">
                     <label for="txtWindow1">Snippet Length:</label>
@@ -301,9 +303,10 @@
 
         
         <div class="windows">
-            <button type="button" class="btn btn-default" id="lessfields" onclick="removeTimes();">  <strong>-</strong> </button>
-            &nbsp
+            <p class="add-remove">Add / Remove Snippets:</p>
             <button type="button" class="btn btn-default" id="morefields" onclick="addMoreTimes();">  <strong>+</strong> </button>
+            &nbsp
+            <button type="button" class="btn btn-default" id="lessfields" onclick="removeTimes();">  <strong>-</strong> </button>
         </div>
         <div class="submit">
             <input type ="button" class="btn btn-default btn-lg" onclick ="javascript: saveValues(); validate_form();" value="Submit" />
