@@ -73,7 +73,7 @@ public class Retrieve
                             "<dl class='snippet-info dl-horizontal'>" +
                                 "<dt><strong>Title:</strong></dt><dd class='text-left'>Snippet_" + i + ".mp4</dd>" +
                                 "<dt><strong>Timestamp:</strong></dt><dd class='text-left'>" + timestamps[i - 1] + "</dd>" +
-                                "<dt><strong>Length:</strong></dt><dd class='text-left'>" + windows[i - 1] + "</dd>" +
+                                "<dt><strong>Length:</strong></dt><dd class='text-left'>" + windows[i - 1] + " seconds</dd>" +
                             "</dl>" +
                             "<div style='float:left; padding-left:40px;'>" +
                                 "<input type='checkbox' id='chkSnippet" + i + "' name='" + i + "' runat='server' style='margin-right:5px;'>" +
