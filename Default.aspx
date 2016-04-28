@@ -102,7 +102,7 @@
                 return false;
             }
             if (moment.max(time_stamp, duration) == time_stamp) {
-                error = "Time stamp: " + time_stamp[i] + " is out of bounds.";
+                error = "Time stamp: " + time_stamps[i] + " is out of bounds.";
                 return false;
             }
             if (moment.max(duration, end) == end) {
