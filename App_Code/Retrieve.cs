@@ -26,12 +26,12 @@ public class Retrieve
         string result = ProcessVideo.StartProcess("C:\\ffprobe.exe", "-v error -show_entries stream=width,height -of default=noprint_wrappers=1 \"" + location + "\\" + filename + "\"");
         int marker = result.IndexOf("width=");
         result = result.Substring(marker + 6);
-        marker = result.IndexOf('\r');
-        string width = result.Substring(0, marker);
         marker = result.IndexOf("height=");
-        result = result.Substring(marker + 7);
-        marker = result.IndexOf('\r');
-        string height = result.Substring(0, marker);
+        string width = result.Substring(0, marker);
+        //marker = result.IndexOf("height=");
+        string height = result.Substring(marker + 7);
+        //marker = result.IndexOf('\r');
+        //string height = result.Substring(0, marker);
 
         HttpContext.Current.Session["width"] = width;
         HttpContext.Current.Session["height"] = height;

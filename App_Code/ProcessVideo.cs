@@ -70,20 +70,25 @@ public class ProcessVideo
         process.StartInfo.FileName = filename;
         process.StartInfo.Arguments = arguments;
         process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardError = true;
+        //process.StartInfo.RedirectStandardError = true;
         process.StartInfo.RedirectStandardOutput = true;
 
-        //StringBuilder output = new StringBuilder();
-        //StringBuilder error = new StringBuilder();
+        if (!process.Start())
+        {
+            Console.WriteLine("Error starting");
+            return "";
+        }
+        String line;
+        String output = "";
+        StreamReader output_reader = process.StandardOutput;
+        while ((line = output_reader.ReadLine()) != null)
+        {
+            output += line;
+            Console.WriteLine(line);
+        }
+        //String error = process.StandardError.ReadToEnd();
+        process.Close();
 
-        process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-
-        process.Start();
-        
-        process.WaitForExit();
-        String output = process.StandardOutput.ReadToEnd();
-        String error = process.StandardError.ReadToEnd();
-        process.Dispose();
         return output;
     }
 }
