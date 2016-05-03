@@ -90,7 +90,7 @@
 
             <div class="row download">
                 <button type="button" class="btn btn-default btn-lg" onclick="javascript: if (checked()) { getSelected(); $('#frm').submit(); }">
-                    <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download
+                    <span class="" aria-hidden="true"></span><i class="fa fa-download"></i> Download Selected
                 </button>
             </div>
             <div class="text-center">
